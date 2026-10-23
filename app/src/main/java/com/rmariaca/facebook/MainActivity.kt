@@ -9,6 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.rmariaca.facebook.ui.Routes
+import com.rmariaca.facebook.ui.screens.FacebookLoginScreen
+import com.rmariaca.facebook.ui.screens.FacebookRegisterScreen
+import com.rmariaca.facebook.ui.screens.MainScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,14 +22,32 @@ class MainActivity : ComponentActivity() {
             val myNavController = rememberNavController()
             NavHost(
                 navController = myNavController,
-                startDestination = "Login",
+                startDestination = Routes.LOGIN,
                 modifier = Modifier.fillMaxSize()
             ) {
-                composable(route = "Login"){
-                    FacebookLoginScreen(navController = myNavController)
+                composable(route = Routes.LOGIN) {
+                    FacebookLoginScreen(
+                        onRegisterClick = {
+                            myNavController.navigate(route = Routes.REGISTER)
+                        },
+                        onLoginClick = {
+                            myNavController.navigate(Routes.FEED) {
+                                popUpTo(Routes.LOGIN) {
+                                    inclusive = true
+                                }
+                            }
+                        }
+                    )
                 }
-                composable(route = "register") {
-                    FacebookRegisterScreen(onBackClick = { myNavController.popBackStack() })
+                composable(Routes.REGISTER) {
+                    FacebookRegisterScreen(
+                        onBackClick = {
+                            myNavController.navigate(Routes.LOGIN)
+                        }
+                    )
+                }
+                composable(Routes.FEED) {
+                    MainScreen()
                 }
             }
         }

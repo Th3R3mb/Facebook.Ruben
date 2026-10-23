@@ -1,4 +1,4 @@
-package com.rmariaca.facebook
+package com.rmariaca.facebook.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -21,17 +21,18 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import com.rmariaca.facebook.ui.theme.FacebookBlue
+import com.rmariaca.facebook.ui.theme.FacebookBorderGray
+import com.rmariaca.facebook.ui.theme.FacebookGreen
+import com.rmariaca.facebook.ui.theme.FacebookTextGray
 
-// Colores oficiales de Facebook
-val FacebookBlue = Color(0xFF1877F2)
-private val FacebookLightBlue = Color(0xFF42B72A) // verde para "Crear cuenta"
-private val FacebookBorderGray = Color(0xFFCCD0D5)
-private val FacebookTextGray = Color(0xFF606770)
 
 
 @Composable
-fun FacebookLoginScreen(navController: NavController) {
+fun FacebookLoginScreen(
+    onLoginClick: () -> Unit = {},
+    onRegisterClick: () -> Unit = {}
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -84,7 +85,9 @@ fun FacebookLoginScreen(navController: NavController) {
 
         // Botón Iniciar sesión
         Button(
-            onClick = {  },
+            onClick = {
+                onLoginClick()
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),
@@ -141,12 +144,12 @@ fun FacebookLoginScreen(navController: NavController) {
         // Botón Crear cuenta nueva
         Button(
             onClick = {
-                navController.navigate(route = "register")
+                onRegisterClick()
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = FacebookLightBlue),
+            colors = ButtonDefaults.buttonColors(containerColor = FacebookGreen),
             shape = RoundedCornerShape(6.dp)
         ) {
             Text(
