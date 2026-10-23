@@ -1,5 +1,4 @@
-package com.rmariaca.facebook.ui
-
+package com.rmariaca.facebook
 object Routes {
     const val LOGIN = "login"
     const val REGISTER = "register"

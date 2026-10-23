@@ -6,5 +6,6 @@ data class Post(
     val time: String,
     val content: String,
     val likes: Int,
-    val comments: Int
+    val comments: Int,
+    val liked: Boolean = false,
 )
